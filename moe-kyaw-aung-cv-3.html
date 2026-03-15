@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moe Kyaw Aung — Software Engineer & Developer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700;900&family=JetBrains+Mono:wght@300;400;500&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0a0a0f;
+      --paper: #f5f0e8;
+      --gold: #c9933a;
+      --gold-light: #e6b563;
+      --silver: #8a8fa8;
+      --rule: #1e2035;
+      --card-bg: #10121f;
+      --text-dim: #5a5f7a;
+      --border: rgba(201, 147, 58, 0.2);
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--ink); color: var(--paper); font-family: 'Source Serif 4', Georgia, serif; font-weight: 300; line-height: 1.7; overflow-x: hidden; }
+    ::-webkit-scrollbar { width: 4px; }
+    ::-webkit-scrollbar-track { background: var(--ink); }
+    ::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+    /* MASTHEAD */
+    .masthead { position: relative; z-index: 1; border-bottom: 1px solid var(--rule); padding: 2rem 3rem 0; overflow: hidden; }
+    .masthead::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    .masthead-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 2rem; flex-wrap: wrap; }
+    .publication-label { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.75rem; }
+    .name-block h1 { font-family: 'Playfair Display', serif; font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.02em; color: var(--paper); animation: fadeUp 0.8s ease both; }
+    .name-block h1 span { color: var(--gold); display: block; }
+    .contact-block { text-align: right; min-width: 220px; }
+    .contact-block a, .contact-block p { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: var(--silver); text-decoration: none; line-height: 2; letter-spacing: 0.05em; transition: color 0.2s; }
+    .contact-block a:hover { color: var(--gold-light); }
+    .contact-block .label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-dim); }
+    .headline-bar { display: flex; align-items: center; gap: 2rem; padding: 1.5rem 0; margin-top: 1.5rem; border-top: 1px solid var(--rule); flex-wrap: wrap; }
+    .headline-bar .title-tag { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-style: italic; color: var(--gold-light); white-space: nowrap; }
+    .headline-bar .tagline { font-size: 0.85rem; color: var(--silver); letter-spacing: 0.03em; line-height: 1.5; }
+    .cert-ticker { margin-left: auto; font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.1em; white-space: nowrap; border: 1px solid var(--border); padding: 0.4rem 0.8rem; border-radius: 2px; }
+
+    /* LAYOUT */
+    .main-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 320px; gap: 0; }
+    .content-col { padding: 3rem; border-right: 1px solid var(--rule); }
+    .sidebar-col { padding: 3rem 2rem; }
+
+    /* SECTIONS */
+    .section-header { display: flex; align-items: center; gap: 1rem; margin-bottom: 2rem; }
+    .section-header .num { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; color: var(--gold); letter-spacing: 0.2em; }
+    .section-header h2 { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: var(--paper); letter-spacing: -0.01em; }
+    .section-header::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--rule), transparent); }
+    section { margin-bottom: 4rem; }
+
+    /* ABOUT */
+    .about-text { font-size: 1.05rem; color: #c8c5bc; line-height: 1.85; max-width: 680px; }
+    .about-text strong { color: var(--gold-light); font-weight: 600; }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); margin: 2.5rem 0; border: 1px solid var(--rule); }
+    .stat-cell { background: var(--ink); padding: 1.5rem; text-align: center; transition: background 0.2s; }
+    .stat-cell:hover { background: var(--card-bg); }
+    .stat-cell .num { font-family: 'Playfair Display', serif; font-size: 2.8rem; font-weight: 900; color: var(--gold); line-height: 1; display: block; }
+    .stat-cell .label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-dim); display: block; margin-top: 0.5rem; }
+
+    /* CERT CATEGORIES */
+    .cert-section { margin-bottom: 3rem; }
+    .cat-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 1.25rem; padding-bottom: 0.75rem; border-bottom: 1px solid var(--rule); }
+    .cat-header h3 { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 600; color: var(--paper); }
+    .cat-header .cat-count { font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; color: var(--gold); letter-spacing: 0.15em; }
+    .cert-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 0.6rem; }
+    .cert-card { background: var(--card-bg); border: 1px solid transparent; border-radius: 3px; padding: 0.85rem 1rem; transition: border-color 0.2s, transform 0.15s, background 0.2s; cursor: default; position: relative; overflow: hidden; }
+    .cert-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 2px; background: var(--gold); transform: scaleY(0); transform-origin: bottom; transition: transform 0.2s; }
+    .cert-card:hover { border-color: var(--border); background: #14172a; transform: translateY(-1px); }
+    .cert-card:hover::before { transform: scaleY(1); }
+    .cert-card .cert-name { font-size: 0.82rem; color: var(--paper); font-weight: 400; line-height: 1.4; }
+    .cert-card .cert-meta { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--text-dim); margin-top: 0.4rem; letter-spacing: 0.05em; }
+
+    /* CATEGORY COLORS */
+    .cat-pl .cert-card:hover::before { background: #5b8dd9; }
+    .cat-web .cert-card:hover::before { background: #5dbf7a; }
+    .cat-mobile .cert-card:hover::before { background: #d96b8d; }
+    .cat-db .cert-card:hover::before { background: #d9b05b; }
+    .cat-ai .cert-card:hover::before { background: #7b5bd9; }
+    .cat-sec .cert-card:hover::before { background: #d95b5b; }
+    .cat-bc .cert-card:hover::before { background: #5bd9c9; }
+    .cat-test .cert-card:hover::before { background: #c9935b; }
+    .cat-mkt .cert-card:hover::before { background: #8dd95b; }
+    .cat-pl .cat-header h3 { border-left: 3px solid #5b8dd9; padding-left: 0.75rem; }
+    .cat-web .cat-header h3 { border-left: 3px solid #5dbf7a; padding-left: 0.75rem; }
+    .cat-mobile .cat-header h3 { border-left: 3px solid #d96b8d; padding-left: 0.75rem; }
+    .cat-db .cat-header h3 { border-left: 3px solid #d9b05b; padding-left: 0.75rem; }
+    .cat-ai .cat-header h3 { border-left: 3px solid #7b5bd9; padding-left: 0.75rem; }
+    .cat-sec .cat-header h3 { border-left: 3px solid #d95b5b; padding-left: 0.75rem; }
+    .cat-bc .cat-header h3 { border-left: 3px solid #5bd9c9; padding-left: 0.75rem; }
+    .cat-test .cat-header h3 { border-left: 3px solid #c9935b; padding-left: 0.75rem; }
+    .cat-mkt .cat-header h3 { border-left: 3px solid #8dd95b; padding-left: 0.75rem; }
+
+    /* SIDEBAR */
+    .sidebar-section { margin-bottom: 2.5rem; }
+    .sidebar-label { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--rule); }
+    .skill-bar-item { margin-bottom: 1rem; }
+    .skill-bar-label { display: flex; justify-content: space-between; font-size: 0.78rem; color: var(--paper); margin-bottom: 0.4rem; }
+    .skill-bar-label span:last-child { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); }
+    .skill-bar-track { height: 2px; background: var(--rule); border-radius: 1px; overflow: hidden; }
+    .skill-bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--gold-light)); border-radius: 1px; transform: scaleX(0); transform-origin: left; animation: barGrow 1s ease forwards; animation-delay: var(--delay, 0s); }
+    .domain-chips { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+    .chip { font-family: 'JetBrains Mono', monospace; font-size: 0.6rem; letter-spacing: 0.08em; padding: 0.3rem 0.65rem; border: 1px solid; border-radius: 2px; color: var(--paper); opacity: 0.75; transition: opacity 0.2s; }
+    .chip:hover { opacity: 1; }
+
+    /* TIMELINE */
+    .timeline { position: relative; padding-left: 1.5rem; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: linear-gradient(to bottom, var(--gold), transparent); }
+    .timeline-item { position: relative; margin-bottom: 1.25rem; }
+    .timeline-item::before { content: ''; position: absolute; left: -1.6rem; top: 0.45rem; width: 5px; height: 5px; background: var(--gold); border-radius: 50%; }
+    .timeline-date { font-family: 'JetBrains Mono', monospace; font-size: 0.58rem; color: var(--gold); letter-spacing: 0.1em; }
+    .timeline-text { font-size: 0.8rem; color: var(--silver); line-height: 1.5; }
+
+    /* FOOTER */
+    footer { position: relative; z-index: 1; border-top: 1px solid var(--rule); padding: 2rem 3rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; }
+    footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+    footer p { font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); letter-spacing: 0.1em; }
+    footer .footer-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--gold); }
+
+    /* ANIMATIONS */
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes barGrow { to { transform: scaleX(1); } }
+    .fade-in { opacity: 0; transform: translateY(16px); animation: fadeUp 0.6s ease forwards; }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .main-grid { grid-template-columns: 1fr; }
+      .content-col { border-right: none; border-bottom: 1px solid var(--rule); padding: 2rem; }
+      .sidebar-col { padding: 2rem; }
+      .masthead { padding: 1.5rem 2rem 0; }
+      .stats-row { grid-template-columns: repeat(2, 1fr); }
+      footer { padding: 1.5rem 2rem; }
+      .masthead-top { flex-direction: column; }
+      .contact-block { text-align: left; }
+      .cert-ticker { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <div class="name-block">
+      <p class="publication-label">✦ Professional Profile &amp; Certification Registry</p>
+      <h1>Moe Kyaw<span>Aung</span></h1>
+    </div>
+    <div class="contact-block">
+      <span class="label">Contact</span>
+      <a href="mailto:moekyawaung@sent.com">moekyawaung@sent.com</a>
+      <a href="tel:09889000889">+95 989 000 889</a>
+      <a href="https://moekyawaung-programmer.github.io/" target="_blank">moekyawaung-programmer.github.io</a>
+      <a href="https://github.com/Moekyawaung-programmer" target="_blank">github.com/Moekyawaung-programmer</a>
+    </div>
+  </div>
+  <div class="headline-bar">
+    <span class="title-tag">Full-Stack Developer &amp; Polyglot Programmer</span>
+    <span style="color: #1e2035">|</span>
+    <span class="tagline">Multi-domain certified engineer across languages, frameworks, AI/ML, security, and blockchain —<br>dedicated to building robust, scalable software solutions from first principles to full deployment.</span>
+    <div class="cert-ticker">112 CERTIFICATIONS · PROGRAMMING HUB</div>
+  </div>
+</header>
+
+<div class="main-grid">
+  <main class="content-col">
+
+    <section class="fade-in" style="animation-delay:0.1s">
+      <div class="section-header">
+        <span class="num">01</span>
+        <h2>Profile</h2>
+      </div>
+      <p class="about-text">
+        Moe Kyaw Aung is a <strong>self-driven, polyglot software engineer</strong> with a uniquely broad foundation spanning programming languages, web and mobile development, data science, artificial intelligence, cybersecurity, blockchain, and digital marketing. Holding over <strong>112 verified certifications</strong> from Programming Hub, he has systematically built expertise from low-level systems programming in <strong>C, Assembly, and Rust</strong> all the way to modern cloud-native stacks including <strong>React, Next.js, Flutter, and Docker</strong>. This depth and breadth reflect not just a passion for technology, but a genuine commitment to understanding systems at their core before leveraging them in practice. Moe approaches software engineering as a <strong>craft</strong> — learning how each layer of the stack works, so that solutions built on top are solid, maintainable, and performant.
+      </p>
+    </section>
+
+    <div class="stats-row fade-in" style="animation-delay:0.2s">
+      <div class="stat-cell"><span class="num">112</span><span class="label">Certifications</span></div>
+      <div class="stat-cell"><span class="num">9</span><span class="label">Skill Domains</span></div>
+      <div class="stat-cell"><span class="num">28+</span><span class="label">Languages</span></div>
+      <div class="stat-cell"><span class="num">2022</span><span class="label">Since</span></div>
+    </div>
+
+    <section>
+      <div class="section-header fade-in" style="animation-delay:0.3s">
+        <span class="num">02</span>
+        <h2>Certifications</h2>
+      </div>
+
+      <div class="cert-section cat-pl fade-in" style="animation-delay:0.35s">
+        <div class="cat-header"><h3>Programming Languages &amp; Fundamentals</h3><span class="cat-count">28 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">C Programming</span><span class="cert-meta">Jun 28, 2024 · #1719565555041</span></div>
+          <div class="cert-card"><span class="cert-name">C Advanced</span><span class="cert-meta">Feb 18, 2025 · #1739835716200</span></div>
+          <div class="cert-card"><span class="cert-name">C++</span><span class="cert-meta">Feb 18, 2025 · #1739898552380</span></div>
+          <div class="cert-card"><span class="cert-name">Java</span><span class="cert-meta">Jun 28, 2024 · #1719564789922</span></div>
+          <div class="cert-card"><span class="cert-name">Java Advanced</span><span class="cert-meta">Feb 18, 2025 · #1739836107562</span></div>
+          <div class="cert-card"><span class="cert-name">Python</span><span class="cert-meta">Feb 18, 2025 · #1739855719117</span></div>
+          <div class="cert-card"><span class="cert-name">Python 3</span><span class="cert-meta">Feb 18, 2025 · #1739897104314</span></div>
+          <div class="cert-card"><span class="cert-name">Python Advanced</span><span class="cert-meta">Feb 18, 2025 · #1739855683537</span></div>
+          <div class="cert-card"><span class="cert-name">JavaScript</span><span class="cert-meta">Feb 18, 2025 · #1739833486440</span></div>
+          <div class="cert-card"><span class="cert-name">TypeScript</span><span class="cert-meta">Jul 15, 2024 · #1721000188069</span></div>
+          <div class="cert-card"><span class="cert-name">Kotlin</span><span class="cert-meta">Feb 18, 2025 · #1739833265595</span></div>
+          <div class="cert-card"><span class="cert-name">Kotlin Advanced</span><span class="cert-meta">Feb 18, 2025 · #1739885336702</span></div>
+          <div class="cert-card"><span class="cert-name">Swift</span><span class="cert-meta">Feb 18, 2025 · #1739832920562</span></div>
+          <div class="cert-card"><span class="cert-name">Dart</span><span class="cert-meta">Feb 18, 2025 · #1739837288483</span></div>
+          <div class="cert-card"><span class="cert-name">Go Programming</span><span class="cert-meta">Jan 16, 2025 · #1736963255065</span></div>
+          <div class="cert-card"><span class="cert-name">Rust Programming</span><span class="cert-meta">Feb 18, 2025 · #1739881058674</span></div>
+          <div class="cert-card"><span class="cert-name">Ruby</span><span class="cert-meta">Feb 18, 2025 · #1739898669357</span></div>
+          <div class="cert-card"><span class="cert-name">Scala</span><span class="cert-meta">Jun 29, 2024 · #1719634964896</span></div>
+          <div class="cert-card"><span class="cert-name">Perl</span><span class="cert-meta">Feb 18, 2025 · #1739833829993</span></div>
+          <div class="cert-card"><span class="cert-name">R Programming</span><span class="cert-meta">Feb 18, 2025 · #1739833212942</span></div>
+          <div class="cert-card"><span class="cert-name">Lua</span><span class="cert-meta">Feb 18, 2025 · #1739835829362</span></div>
+          <div class="cert-card"><span class="cert-name">Julia</span><span class="cert-meta">Feb 18, 2025 · #1739880960103</span></div>
+          <div class="cert-card"><span class="cert-name">LISP</span><span class="cert-meta">Jan 8, 2025 · #1736301162621</span></div>
+          <div class="cert-card"><span class="cert-name">Elm Programming</span><span class="cert-meta">Feb 18, 2025 · #1739880694089</span></div>
+          <div class="cert-card"><span class="cert-name">Shell Script</span><span class="cert-meta">Feb 18, 2025 · #1739836933470</span></div>
+          <div class="cert-card"><span class="cert-name">VB.Net</span><span class="cert-meta">Jun 26, 2024 · #1719417917622</span></div>
+          <div class="cert-card"><span class="cert-name">VB 6</span><span class="cert-meta">Feb 18, 2025 · #1739833123656</span></div>
+          <div class="cert-card"><span class="cert-name">Fundamentals</span><span class="cert-meta">Jun 28, 2024 · #1719559651210</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-web fade-in" style="animation-delay:0.4s">
+        <div class="cat-header"><h3>Web Development &amp; Frameworks</h3><span class="cat-count">24 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">HTML</span><span class="cert-meta">Feb 18, 2025 · #1739881119420</span></div>
+          <div class="cert-card"><span class="cert-name">HTML Advanced</span><span class="cert-meta">Jun 28, 2024 · #1719549107753</span></div>
+          <div class="cert-card"><span class="cert-name">CSS</span><span class="cert-meta">Jun 26, 2024 · #1719344297123</span></div>
+          <div class="cert-card"><span class="cert-name">Bootstrap Framework</span><span class="cert-meta">Feb 18, 2025 · #1739880857365</span></div>
+          <div class="cert-card"><span class="cert-name">Bulma CSS</span><span class="cert-meta">Feb 18, 2025 · #1739835479177</span></div>
+          <div class="cert-card"><span class="cert-name">Foundation Framework</span><span class="cert-meta">Feb 18, 2025 · #1739881026057</span></div>
+          <div class="cert-card"><span class="cert-name">React Development</span><span class="cert-meta">Feb 18, 2025 · #1739836044174</span></div>
+          <div class="cert-card"><span class="cert-name">React Native</span><span class="cert-meta">Feb 18, 2025 · #1739836534125</span></div>
+          <div class="cert-card"><span class="cert-name">Next JS</span><span class="cert-meta">Feb 18, 2025 · #1739836430783</span></div>
+          <div class="cert-card"><span class="cert-name">Vue JS</span><span class="cert-meta">Feb 18, 2025 · #1739834822653</span></div>
+          <div class="cert-card"><span class="cert-name">Angular JS</span><span class="cert-meta">Jun 30, 2024 · #1719743636145</span></div>
+          <div class="cert-card"><span class="cert-name">Svelte Web Apps</span><span class="cert-meta">Feb 17, 2025 · #1739756178407</span></div>
+          <div class="cert-card"><span class="cert-name">Node JS</span><span class="cert-meta">Jun 29, 2024 · #1719634746994</span></div>
+          <div class="cert-card"><span class="cert-name">Express JS</span><span class="cert-meta">Feb 18, 2025 · #1739836875831</span></div>
+          <div class="cert-card"><span class="cert-name">Electron JS</span><span class="cert-meta">Feb 18, 2025 · #1739897730494</span></div>
+          <div class="cert-card"><span class="cert-name">Ember JS</span><span class="cert-meta">Jul 2, 2024 · #1719938075595</span></div>
+          <div class="cert-card"><span class="cert-name">Backbone JS</span><span class="cert-meta">Feb 18, 2025 · #1739856370071</span></div>
+          <div class="cert-card"><span class="cert-name">Meteor JS</span><span class="cert-meta">Feb 18, 2025 · #1739833905330</span></div>
+          <div class="cert-card"><span class="cert-name">Gatsby</span><span class="cert-meta">Feb 18, 2025 · #1739837222747</span></div>
+          <div class="cert-card"><span class="cert-name">JQuery</span><span class="cert-meta">Jul 4, 2024 · #1720080513258</span></div>
+          <div class="cert-card"><span class="cert-name">Django</span><span class="cert-meta">Jun 26, 2024 · #1719418019151</span></div>
+          <div class="cert-card"><span class="cert-name">Laravel</span><span class="cert-meta">Jun 30, 2024 · #1719743755535</span></div>
+          <div class="cert-card"><span class="cert-name">WordPress Development</span><span class="cert-meta">Jun 28, 2024 · #1719559838128</span></div>
+          <div class="cert-card"><span class="cert-name">Building a Website</span><span class="cert-meta">Feb 18, 2025 · #1739896759762</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-mobile fade-in" style="animation-delay:0.45s">
+        <div class="cat-header"><h3>Mobile &amp; Application Development</h3><span class="cat-count">7 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Android Development</span><span class="cert-meta">Jun 20, 2022 · #1655668351341</span></div>
+          <div class="cert-card"><span class="cert-name">Kotlin for Android</span><span class="cert-meta">Feb 18, 2025 · #1739833075958</span></div>
+          <div class="cert-card"><span class="cert-name">Flutter</span><span class="cert-meta">Feb 18, 2025 · #1739833967447</span></div>
+          <div class="cert-card"><span class="cert-name">Ionic App Development</span><span class="cert-meta">Jun 26, 2024 · #1719416827654</span></div>
+          <div class="cert-card"><span class="cert-name">iOS App Development</span><span class="cert-meta">Jan 16, 2025 · #1736963166388</span></div>
+          <div class="cert-card"><span class="cert-name">SwiftUI</span><span class="cert-meta">Jan 16, 2025 · #1736963475199</span></div>
+          <div class="cert-card"><span class="cert-name">Unity</span><span class="cert-meta">Feb 18, 2025 · #1739835787785</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-db fade-in" style="animation-delay:0.5s">
+        <div class="cat-header"><h3>Databases &amp; Data Management</h3><span class="cat-count">6 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">RDBMS</span><span class="cert-meta">Feb 18, 2025 · #1739833186026</span></div>
+          <div class="cert-card"><span class="cert-name">PostgreSQL</span><span class="cert-meta">Feb 18, 2025 · #1739856470604</span></div>
+          <div class="cert-card"><span class="cert-name">MongoDB</span><span class="cert-meta">Feb 18, 2025 · #1739893030909</span></div>
+          <div class="cert-card"><span class="cert-name">Redis</span><span class="cert-meta">Feb 18, 2025 · #1739856417618</span></div>
+          <div class="cert-card"><span class="cert-name">Java Hibernate</span><span class="cert-meta">Jul 4, 2024 · #1720080471315</span></div>
+          <div class="cert-card"><span class="cert-name">Java Servlets &amp; JSP</span><span class="cert-meta">Feb 18, 2025 · #1739872416588</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-ai fade-in" style="animation-delay:0.55s">
+        <div class="cat-header"><h3>Data Science, AI &amp; Machine Learning</h3><span class="cat-count">11 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Data Science</span><span class="cert-meta">Jun 26, 2024 · #1719417020917</span></div>
+          <div class="cert-card"><span class="cert-name">Artificial Intelligence</span><span class="cert-meta">Feb 18, 2025 · #1739872038601</span></div>
+          <div class="cert-card"><span class="cert-name">Machine Learning</span><span class="cert-meta">Feb 18, 2025 · #1739898444003</span></div>
+          <div class="cert-card"><span class="cert-name">Machine Learning w/ Python</span><span class="cert-meta">Feb 18, 2025 · #1739836464234</span></div>
+          <div class="cert-card"><span class="cert-name">Natural Language Processing</span><span class="cert-meta">Feb 18, 2025 · #1739835285209</span></div>
+          <div class="cert-card"><span class="cert-name">Computer Vision (Python)</span><span class="cert-meta">Feb 18, 2025 · #1739856569087</span></div>
+          <div class="cert-card"><span class="cert-name">Big Data Analytics</span><span class="cert-meta">Feb 18, 2025 · #1739832702563</span></div>
+          <div class="cert-card"><span class="cert-name">Statistical Analysis</span><span class="cert-meta">Feb 18, 2025 · #1739833742680</span></div>
+          <div class="cert-card"><span class="cert-name">MATLAB</span><span class="cert-meta">Feb 18, 2025 · #1739835621215</span></div>
+          <div class="cert-card"><span class="cert-name">R Programming</span><span class="cert-meta">Feb 18, 2025 · #1739833212942</span></div>
+          <div class="cert-card"><span class="cert-name">ChatGPT</span><span class="cert-meta">Feb 18, 2025 · #1739835091264</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-sec fade-in" style="animation-delay:0.6s">
+        <div class="cat-header"><h3>Security &amp; Networking</h3><span class="cat-count">11 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Cyber Security</span><span class="cert-meta">Jun 28, 2024 · #1719559807330</span></div>
+          <div class="cert-card"><span class="cert-name">Ethical Hacking</span><span class="cert-meta">Feb 18, 2025 · #1739837560681</span></div>
+          <div class="cert-card"><span class="cert-name">Hacking Advanced</span><span class="cert-meta">Feb 18, 2025 · #1739837372601</span></div>
+          <div class="cert-card"><span class="cert-name">Cryptography</span><span class="cert-meta">Feb 18, 2025 · #1739897444326</span></div>
+          <div class="cert-card"><span class="cert-name">Linux</span><span class="cert-meta">Feb 18, 2025 · #1739832797741</span></div>
+          <div class="cert-card"><span class="cert-name">IPv4 &amp; Networking</span><span class="cert-meta">Feb 18, 2025 · #1739880755950</span></div>
+          <div class="cert-card"><span class="cert-name">Git</span><span class="cert-meta">Jun 28, 2024 · #1719565433236</span></div>
+          <div class="cert-card"><span class="cert-name">Docker</span><span class="cert-meta">Feb 17, 2025 · #1739756105374</span></div>
+          <div class="cert-card"><span class="cert-name">DevOps</span><span class="cert-meta">Jan 16, 2025 · #1736964408824</span></div>
+          <div class="cert-card"><span class="cert-name">AWS Cloud Computing</span><span class="cert-meta">Feb 18, 2025 · #1739872219283</span></div>
+          <div class="cert-card"><span class="cert-name">Deno</span><span class="cert-meta">Feb 18, 2025 · #1739834969115</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-bc fade-in" style="animation-delay:0.65s">
+        <div class="cat-header"><h3>Blockchain &amp; Cryptocurrency</h3><span class="cat-count">4 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Blockchain</span><span class="cert-meta">Feb 18, 2025 · #1739898874546</span></div>
+          <div class="cert-card"><span class="cert-name">Solidity</span><span class="cert-meta">Feb 18, 2025 · #1739832612619</span></div>
+          <div class="cert-card"><span class="cert-name">Hyperledger Fabric</span><span class="cert-meta">Feb 18, 2025 · #1739880935050</span></div>
+          <div class="cert-card"><span class="cert-name">Make Your Own Cryptocurrency</span><span class="cert-meta">Feb 18, 2025 · #1739834558700</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-test fade-in" style="animation-delay:0.7s">
+        <div class="cat-header"><h3>Testing &amp; Software Engineering</h3><span class="cat-count">7 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Software Engineering</span><span class="cert-meta">Feb 18, 2025 · #1739836592265</span></div>
+          <div class="cert-card"><span class="cert-name">Software Testing</span><span class="cert-meta">Feb 18, 2025 · #1739881946090</span></div>
+          <div class="cert-card"><span class="cert-name">Selenium Automated Testing</span><span class="cert-meta">Feb 18, 2025 · #1739898318104</span></div>
+          <div class="cert-card"><span class="cert-name">Data Structures &amp; Algorithms</span><span class="cert-meta">Feb 18, 2025 · #1739837079915</span></div>
+          <div class="cert-card"><span class="cert-name">Assembly 8086</span><span class="cert-meta">Feb 18, 2025 · #1739836280776</span></div>
+          <div class="cert-card"><span class="cert-name">Robotic Process Automation</span><span class="cert-meta">Feb 18, 2025 · #1739893800025</span></div>
+          <div class="cert-card"><span class="cert-name">Kivy Framework</span><span class="cert-meta">Feb 18, 2025 · #1739837854104</span></div>
+        </div>
+      </div>
+
+      <div class="cert-section cat-mkt fade-in" style="animation-delay:0.75s">
+        <div class="cat-header"><h3>Marketing, Business &amp; Technology</h3><span class="cat-count">14 CERTS</span></div>
+        <div class="cert-grid">
+          <div class="cert-card"><span class="cert-name">Digital Marketing</span><span class="cert-meta">Feb 18, 2025 · #1739898606284</span></div>
+          <div class="cert-card"><span class="cert-name">Digital Marketing Advanced</span><span class="cert-meta">Jun 29, 2024 · #1719635013116</span></div>
+          <div class="cert-card"><span class="cert-name">SEO</span><span class="cert-meta">Feb 18, 2025 · #1739833767089</span></div>
+          <div class="cert-card"><span class="cert-name">Social Media Marketing</span><span class="cert-meta">Feb 18, 2025 · #1739898404925</span></div>
+          <div class="cert-card"><span class="cert-name">Google Ads Measurements</span><span class="cert-meta">Feb 18, 2025 · #1739881242969</span></div>
+          <div class="cert-card"><span class="cert-name">Google Display Ads</span><span class="cert-meta">Feb 18, 2025 · #1739856891521</span></div>
+          <div class="cert-card"><span class="cert-name">Google Shopping Ads</span><span class="cert-meta">Feb 18, 2025 · #1739856936031</span></div>
+          <div class="cert-card"><span class="cert-name">Growth Hacking</span><span class="cert-meta">Feb 18, 2025 · #1739836337814</span></div>
+          <div class="cert-card"><span class="cert-name">GraphQL</span><span class="cert-meta">Feb 18, 2025 · #1739835213403</span></div>
+          <div class="cert-card"><span class="cert-name">IOT</span><span class="cert-meta">Feb 18, 2025 · #1739836671489</span></div>
+          <div class="cert-card"><span class="cert-name">Edge Computing</span><span class="cert-meta">Jun 28, 2024 · #1719563380542</span></div>
+          <div class="cert-card"><span class="cert-name">Material Design</span><span class="cert-meta">Feb 18, 2025 · #1739882348313</span></div>
+          <div class="cert-card"><span class="cert-name">Tableau</span><span class="cert-meta">Jun 28, 2024 · #1719565631868</span></div>
+          <div class="cert-card"><span class="cert-name">IT Basics</span><span class="cert-meta">Jun 20, 2022 · #1655669020843</span></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <aside class="sidebar-col">
+    <div class="sidebar-section fade-in" style="animation-delay:0.3s">
+      <p class="sidebar-label">Core Expertise</p>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Full-Stack Web Dev</span><span>28 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:100%; --delay:0.4s"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Programming Languages</span><span>28 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:100%; --delay:0.5s"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>AI / ML / Data Science</span><span>11 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:70%; --delay:0.6s"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Security &amp; DevOps</span><span>11 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:65%; --delay:0.65s"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Mobile Development</span><span>7 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:48%; --delay:0.7s"></div></div>
+      </div>
+      <div class="skill-bar-item">
+        <div class="skill-bar-label"><span>Databases</span><span>6 certs</span></div>
+        <div class="skill-bar-track"><div class="skill-bar-fill" style="width:40%; --delay:0.75s"></div></div>
+      </div>
+    </div>
+
+    <div class="sidebar-section fade-in" style="animation-delay:0.5s">
+      <p class="sidebar-label">Certified Languages</p>
+      <div class="domain-chips">
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Python</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">JavaScript</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">TypeScript</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Java</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">C / C++</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Kotlin</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Swift</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Rust</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Go</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Dart</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Ruby</span>
+        <span class="chip" style="border-color:#5b8dd9; color:#5b8dd9">Scala</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Lua</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Julia</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Elm</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">LISP</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Perl</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">R</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Shell</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">VB</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section fade-in" style="animation-delay:0.6s">
+      <p class="sidebar-label">Certification Journey</p>
+      <div class="timeline">
+        <div class="timeline-item">
+          <p class="timeline-date">JUNE 2022</p>
+          <p class="timeline-text">First certifications — Android Development &amp; IT Basics</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-date">JUNE 2024</p>
+          <p class="timeline-text">Major expansion: 20+ certs in web, languages, frameworks</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-date">JULY 2024</p>
+          <p class="timeline-text">TypeScript, JQuery, Ember JS, Java Hibernate</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-date">JANUARY 2025</p>
+          <p class="timeline-text">LISP, Go, iOS, SwiftUI, DevOps completed</p>
+        </div>
+        <div class="timeline-item">
+          <p class="timeline-date">FEB 2025</p>
+          <p class="timeline-text">Intensive sprint — 80+ certifications across all domains</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sidebar-section fade-in" style="animation-delay:0.7s">
+      <p class="sidebar-label">Platforms &amp; Tools</p>
+      <div class="domain-chips">
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">React</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Next.js</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Flutter</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Docker</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">AWS</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Django</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Node.js</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">MongoDB</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">PostgreSQL</span>
+        <span class="chip" style="border-color:#5dbf7a; color:#5dbf7a">Git</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Unity</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">Solidity</span>
+        <span class="chip" style="border-color:#8a8fa8; color:#8a8fa8">GraphQL</span>
+      </div>
+    </div>
+
+    <div class="sidebar-section fade-in" style="animation-delay:0.8s">
+      <p class="sidebar-label">Certification Authority</p>
+      <div style="border: 1px solid var(--border); padding: 1rem; border-radius: 3px; background: var(--card-bg);">
+        <p style="font-family: 'Playfair Display', serif; font-size: 1.05rem; font-weight: 600; color: var(--gold-light); margin-bottom: 0.4rem;">Programming Hub</p>
+        <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.62rem; color: var(--text-dim); line-height: 1.7;">All 112 certifications issued by<br>Programming Hub platform.<br>Certificate IDs verifiable on<br>programminghub.io</p>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <span class="footer-name">Moe Kyaw Aung</span>
+  <p>moekyawaung@sent.com · 09889000889</p>
+  <p>moekyawaung-programmer.github.io</p>
+  <p style="color: var(--text-dim)">112 Certifications · Programming Hub · 2022–2025</p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.fade-in');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'none';
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.05 });
+  els.forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
